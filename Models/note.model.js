@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
 const { Schema} = require("mongoose");
+const connection = require("../Config/db.config");
 
-// creating our note schema 
+// defining our note schema 
 const noteSchema = new Schema({
   title : {
     type: String,
@@ -12,4 +13,7 @@ const noteSchema = new Schema({
   }
 }, {timestamps: true});//timestamps to add the "created at" and "modified at" fields
 
-module.exports = mongoose.model("Note", noteSchema);
+// creating our schema  
+const Note = mongoose.model("Note", noteSchema);
+
+module.exports = Note
