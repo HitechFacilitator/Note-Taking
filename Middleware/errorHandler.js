@@ -1,10 +1,14 @@
+const {isHttpError} = require("http-errors")
+
 const errorHandler = (error, req, res, next) =>{
     console.error("Error encountered", error);
     let errorMessage = "An unknown error was encountered";
-    if (error instanceof Error) {
+    let statusCode = 500
+    if (isHttpError(error)) {
       errorMessage = error.message;
+      statusCode = error.status
     }
-    return res.status(400).json({ error: errorMessage });
+    return res.status(statusCode).json({ error: errorMessage});
 }
 
 module.exports = errorHandler;
