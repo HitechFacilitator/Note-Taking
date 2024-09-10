@@ -11,7 +11,9 @@ rRouter.post('/create', note.create)
 rRouter.get('/getByTitle', note.getByTitle)
 rRouter.get('/getById', note.getById)
 rRouter.get('/getAll', note.getAll)
+rRouter.patch('/update', note.updateNote)
 rRouter.delete('/deleteByTitle', note.deleteByTitle)
+rRouter.delete('/deleteById', note.deleteById)
 rRouter.delete('/deleteAll', note.deleteAll)
 
 module.exports = rRouter;
