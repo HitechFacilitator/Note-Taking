@@ -13,8 +13,7 @@ exports.create = async (req, res, next) =>{
     verifHandler.verifEmpty(title, "A Note most have a Title", next)
     const note = await noteModel.findOne({title: title})
     if (note) {
-      console.log(note.title);
-      return res.status(302).json("This Note Title is already been used by another Note")
+      next (createHttpError[403]("This Note Title is already been used by another Note"))    
     }
     const newNote = await noteModel.create({
       title: title,
@@ -60,7 +59,7 @@ exports.getById = async (req, res, next) =>{
 //  Getting all notes
 exports.getAll = async (req, res, next) => {
   try {
-    // throw Error("Hello Error")
+    // throw Error()
     const notes = await noteModel.find().exec();
     res.status(200).json(notes);
   } catch (error) { 
