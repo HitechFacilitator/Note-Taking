@@ -8,7 +8,7 @@ exports.verifID = (Id, next) =>{
 }
 
 exports.verifEmpty = (obj, comment = "", next) => {
-    if (!obj) {
+    if (!obj || obj===" " || obj==="  ") {
         next(createHttpError(400, comment))
     }
 } 

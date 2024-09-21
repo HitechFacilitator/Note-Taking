@@ -80,7 +80,7 @@ exports.updateNote = async (req, res, next) =>{
     note.title = nTitle
     note.text = nText
     const updatedNote = await note.save()
-    res.status(200).json({updatedNote : updatedNote})
+    res.status(200).json(updatedNote)
   } catch (error) {
     next(createHttpError.InternalServerError("An Error was face while updating the Note"))
   }
