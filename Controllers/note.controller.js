@@ -1,5 +1,4 @@
 const createHttpError = require("http-errors");
-const mongoose = require("mongoose");
 
 const noteModel = require("../Models/note.model");
 const verifHandler = require("../Middleware/verifHandler")
@@ -59,7 +58,7 @@ exports.getById = async (req, res, next) =>{
 //  Getting all notes
 exports.getAll = async (req, res, next) => {
   try {
-    // throw Error()
+    // throw Error() 
     const notes = await noteModel.find().exec();
     res.status(200).json(notes);
   } catch (error) { 

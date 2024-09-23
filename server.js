@@ -2,6 +2,8 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
+const session = require("express-session");
+const MongoStore = require("connect-mongo")
 const createHttpError = require("http-errors")
 const cors = require('cors');
 
@@ -22,6 +24,20 @@ app.use(cors(corsOption))
 
 // accepting json data 
 app.use(express.json())
+
+app.use(session({
+  secret: process.env.SESSION_SECRET_KEY,
+  resave: false,
+  saveUninitialized: false,
+  cookie:{
+    maxAge: 60*60*1000,
+    httpOnly: true
+  },
+  rolling: true,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGO_CONNECTION_STRING
+  })
+}))
 
 const port = process.env.PORT;
 //  using the logging 
