@@ -2,10 +2,11 @@ const express = require("express");
 const nRouter = express.Router()
 
 const user = require("../Controllers/user.controller")
-const { getAurhenticatedUser } = require("../Middleware/isAuthenticated")
+const { getAurhenticatedUser } = require("../Middleware/getAuthenticatedUser");
+const IsAuth = require("../Middleware/isAuth");
 
 // nRouter.get('/',user.getAurhenticatedUser)
-nRouter.get('/',getAurhenticatedUser, (req, res) =>{
+nRouter.get('/'/*, IsAuth*/, getAurhenticatedUser, (req, res) =>{
     res.status(200).json("Welcome to the USER Section")
 })
 

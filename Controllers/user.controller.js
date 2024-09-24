@@ -12,17 +12,14 @@ exports.register = async (req, res, next) =>{
         verifEmpty(name, "Your Name is required", next)
         verifEmpty(email, "Enter Your Email", next)
         if (!isEmail(email)) {
-            res.status(403).json("Enter a Valid Email Address")
-            return
+            throw createHttpError(403,"Enter a Valid Email Address")
         }
         verifEmpty(password, "Don't Forget to enter your password", next)
         if (password.length < 7) {
-            res.status(403).json("You password should have atleast 7 characters")
-            return
+            throw createHttpError(403,"You password should have atleast 7 characters")
         }
         if(!/[a-z]/.test(password) || !/[A-Z]/.test(password) || !/[0-9]/.test(password)){
-            res.status(403).json("A Strong Password most contain atleast an Upper cases letter(A-Z), a Lower cases letter(a-z) and a numerics(0-1)")
-            return
+            throw createHttpError(403, "A Strong Password most contain atleast an Upper cases letter(A-Z), a Lower cases letter(a-z) and a numerics(0-1)")
         }
         const nameExist = await userModel.findOne({name: name})
         const emailExist = await userModel.findOne({email: email})
@@ -61,7 +58,7 @@ exports.login = async (req, res, next) =>{
                 throw createHttpError(401, "Invalid Password")
             }
         } else {
-            throw createHttpError(404, "User with the entered credentials do not exist")
+            throw createHttpError(401, "User with the entered credentials do not exist")
         }
     } catch (error) {
         next(error)
