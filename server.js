@@ -18,7 +18,8 @@ dotenv.config();
 
 // setting up cors options (which origin can access this backend services)
 const corsOption = {
-  origin: "http://localhost:3000"
+  origin: "http://localhost:3000",
+  credentials: true
 }
 app.use(cors(corsOption))
 
@@ -31,11 +32,14 @@ app.use(session({
   saveUninitialized: false,
   cookie:{
     maxAge: 60*60*1000,
+    secure: false,
     httpOnly: true
   },
   rolling: true,
   store: MongoStore.create({
-    mongoUrl: process.env.MONGO_CONNECTION_STRING
+    mongoUrl: process.env.MONGO_CONNECTION_STRING,
+    autoRemove: "native",
+    ttl: 60*60*24
   })
 }))
 

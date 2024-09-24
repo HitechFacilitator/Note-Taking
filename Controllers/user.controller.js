@@ -51,7 +51,7 @@ exports.login = async (req, res, next) =>{
     try {
         verifEmpty(name, "Enter Your User Name", next)
         verifEmpty(password, "Don't Forget to enter your password", next)
-        const userNameExist = await userModel.findOne({name: name}).select("+password + email")
+        const userNameExist = await userModel.findOne({name: name}).select("+password")
         if (userNameExist) {
             const passwordOk = await bcrypt.compare(password, userNameExist.password)
             if (passwordOk) {
@@ -71,7 +71,7 @@ exports.login = async (req, res, next) =>{
 exports.logout = (req, res, next) =>{
     try {
         req.session.destroy()
-        res.clearCookie('connect.sid')
+        // res.clearCookie('connect.sid')
         res.sendStatus(200)
     } catch (error) {
         next(error)
